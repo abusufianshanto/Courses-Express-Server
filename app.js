@@ -1,36 +1,33 @@
-const express = require('express')
-const database = require("./database.js")
+const express = require('express');
+const app = express();
+const port = 3000;
 
-const app = express()
-const port = 3000
+// Sample course data
+const courses = [
+  { name: "InfoSys", attendance: 90, program: "EC", postalCode: "83278", city: "Traunstein" },
+  { name: "Math", attendance: 45, program: "EC", postalCode: "83278", city: "Traunstein" },
+  { name: "Physics", attendance: 70, program: "EC", postalCode: "83278", city: "Traunstein" }
+];
 
-app.get('/get_all_cities', (req, res) => {
+// Serve static files for CSS (optional)
+app.use(express.static('public'));
 
-    var response_string = ""
+// Route to get all courses
+app.get('/get_all_courses', (req, res) => {
+  let html = '<!DOCTYPE html><html><head><title>Courses</title>';
+  html += '<style> .low-attendance { color: red; } </style>'; // CSS inside HTML
+  html += '</head><body><h1>All Courses</h1><ul>';
 
-    database.all('SELECT * FROM Cities', (err, rows) => {
+  courses.forEach(course => {
+    let className = course.attendance < 50 ? 'low-attendance' : '';
+    html += `<li class="${className}">${course.name} with ${course.attendance}% attendance rate (Study Program: ${course.program}) in ${course.postalCode}, ${course.city}</li>`;
+  });
 
-        for(const row of rows){
-            row_readable = `${row.ZIP}: ${row.CityName}`
-            
-            if(row.ZIP == 76313){
-                response_string += "<b>" + row_readable + "</b><br/>"
-            }else{
-                response_string += row_readable + "<br/>"
-            }
-        }
-        res.send(response_string)
-    })
-})
+  html += '</ul></body></html>';
+  res.send(html);
+});
 
-/*
- Task 1: Create a new route /get_all_courses that produces
- the following type of output: InfoSys with 90% attendence rate (Study Program: EC) in 83278, Traunstein
-
- Task 2: Highlight courses with an attendence rate < 50%
- with a red color (see CSS).
- */
-
+// Start the server
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+  console.log(`Server running at http://localhost:${port}`);
+});

@@ -1,7 +1,7 @@
 {
   "name": "node_js_sqlite",
   "version": "1.0.0",
-  "description": "",
+  "description": "Simple Express server that shows data from a courses SQLite database",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,8 +10,17 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.21.1",
+    "better-sqlite3": "^12.4.1",
+    "express": "^4.21.2",
     "md5": "^2.3.0",
     "sqlite3": "^5.1.7"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sefeg/Courses-Express-Server.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sefeg/Courses-Express-Server/issues"
+  },
+  "homepage": "https://github.com/sefeg/Courses-Express-Server#readme"
 }
